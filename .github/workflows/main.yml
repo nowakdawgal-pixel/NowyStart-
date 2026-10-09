@@ -1,6 +1,6 @@
 name: Build Nowy Start APK
 
-on:
+"<escape>on</escape>":
   workflow_dispatch:
   push:
     paths:
