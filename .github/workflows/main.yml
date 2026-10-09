@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'NowyStart_Android_Projekt.zip'
+      - 'Zegar_Trzezwosci_Android_Projekt_v2.zip'
       - '.github/workflows/main.yml'
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
       - name: Extract project
         run: |
           mkdir android-project
-          unzip NowyStart_Android_Projekt.zip -d android-project
+          unzip Zegar_Trzezwosci_Android_Projekt_v2.zip -d android-project
 
       - name: Install Gradle
         run: |
