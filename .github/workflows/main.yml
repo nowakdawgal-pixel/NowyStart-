@@ -1,45 +1,43 @@
-name: Buduj APK Nowy Start
+name: Build Nowy Start APK
 
 on:
-workflow_dispatch:
-push:
-paths:
-\- 'NowyStart_Android_Projekt.zip'
-\- '.github/workflows/main.yml'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'NowyStart_Android_Projekt.zip'
+      - '.github/workflows/main.yml'
 
 jobs:
-build:
-runs-on: ubuntu-latest
-steps:
-\- name: Pobierz kod
-uses: actions/checkout\@v4
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-```
-  - name: Skonfiguruj JDK
-    uses: actions/setup-java@v4
-    with:
-      distribution: temurin
-      java-version: '17'
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
-  - name: Rozpakuj projekt
-    run: |
-      mkdir android-project
-      unzip NowyStart_Android_Projekt.zip -d android-project
+      - name: Extract project
+        run: |
+          mkdir android-project
+          unzip NowyStart_Android_Projekt.zip -d android-project
 
-  - name: Zainstaluj Gradle 8.9
-    run: |
-      curl -L https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
-      unzip -q /tmp/gradle.zip -d /tmp
-      echo "/tmp/gradle-8.9/bin" >> "$GITHUB_PATH"
+      - name: Install Gradle
+        run: |
+          curl -L https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /tmp
+          echo "/tmp/gradle-8.9/bin" >> "$GITHUB_PATH"
 
-  - name: Zbuduj APK
-    working-directory: android-project
-    run: gradle assembleDebug
+      - name: Build APK
+        working-directory: android-project
+        run: gradle assembleDebug
 
-  - name: Udostępnij APK do pobrania
-    uses: actions/upload-artifact@v4
-    with:
-      name: NowyStart-APK
-      path: android-project/app/build/outputs/apk/debug/app-debug.apk
-      if-no-files-found: error
-```
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: NowyStart-APK
+          path: android-project/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
